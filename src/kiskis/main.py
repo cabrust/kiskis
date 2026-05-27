@@ -94,7 +94,7 @@ def create_app():
         secrets: typing.Dict = storage_.data
         response = "<ul>" + "".join(
             [
-                f"<li>Username: {html.escape(item['username'])}. Purpose: {html.escape(item['purpose'])}. Password: {html.escape(item['password'])}. "
+                f"<li>Username: {html.escape(item['username'])}. Purpose: {html.escape(item['purpose'])}. Password: {html.escape(item['password'])}. TOTP Secret: {html.escape(item['totp_secret'])}."
                 + f'<a href="{html.escape(url_for("delete", username=item["username"]))}">Delete.</a></li>'
                 for item in secrets["passwords"]
             ]
@@ -110,6 +110,7 @@ def create_app():
                 Username: <input type="text" name="username"><br/>
                 Purpose: <input type="text" name="purpose"><br/>
                 Password: <input type="text" name="password"><br/>
+                TOTP Secret: <input type="text" name="totp_secret"><br/>
                 <input type="submit" value="Add">
             </form>"""
 
@@ -120,6 +121,7 @@ def create_app():
             "username": request.values.get("username", ""),
             "purpose": request.values.get("purpose", ""),
             "password": request.values.get("password", ""),
+            "totp_secret": request.values.get("totp_secret", ""),
         }
         storage_.data["passwords"].append(record)
         storage_.save()

@@ -21,9 +21,10 @@ class Storage:
                     "username": "president_skroob",
                     "purpose": "luggage",
                     "password": "12345",
+                    "totp_secret": "XWNCDM4GP4IXHIPM"
                 },
-                {"username": "admin", "purpose": "admin", "password": "admin"},
-                {"username": "AzureDiamond", "purpose": "IRC", "password": "hunter2"},
+                {"username": "admin", "purpose": "admin", "password": "admin", "totp_secret": "KWW3QN64MV2F6FFP"},
+                {"username": "AzureDiamond", "purpose": "IRC", "password": "hunter2", "totp_secret": "BJ5MRK2FFKT2ET6H"},
             ]
         }
 
@@ -62,6 +63,7 @@ class Storage:
                 "username": item["username"],
                 "purpose": item["purpose"],
                 "password": self._encrypt_value(item["password"]),
+                "totp_secret": self._encrypt_value(item["totp_secret"]),
             }
             encrypted["passwords"].append(encrypted_item)
         return encrypted
@@ -73,6 +75,7 @@ class Storage:
                 "username": item["username"],
                 "purpose": item["purpose"],
                 "password": self._decrypt_value(item["password"]),
+                "totp_secret": self._decrypt_value(item["totp_secret"]),
             }
             decrypted["passwords"].append(decrypted_item)
         return decrypted
